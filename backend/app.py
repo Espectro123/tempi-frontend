@@ -23,10 +23,37 @@ def welcome():
     return {"message": "Welcome to Tempi idiot idiot"}
 
 
-@app.get("/temperature")
+@app.get("/temperature1")
 async def read_temperature():
     timestamp = datetime.now().isoformat()
-    temperature = randint(0,1)
+    temperature = randint(20,35)
     print("Temperature; ", temperature, "Time: ", timestamp)
     return {"temperature": temperature, "timestamp": timestamp}
 
+@app.get("/temperature2")
+async def read_temperature():
+    timestamp = datetime.now().isoformat()
+    temperature = randint(20,35)
+    print("Temperature; ", temperature, "Time: ", timestamp)
+    return {"temperature": temperature, "timestamp": timestamp}
+
+@app.get("/temperature3")
+async def read_temperature():
+    timestamp = datetime.now().isoformat()
+    temperature = randint(20,35)
+    print("Temperature; ", temperature, "Time: ", timestamp)
+    return {"temperature": temperature, "timestamp": timestamp}
+
+@app.get("/temperature4")
+async def read_temperature():
+    timestamp = datetime.now().isoformat()
+    temperature = randint(20,35)
+    print("Temperature; ", temperature, "Time: ", timestamp)
+    return {"temperature": temperature, "timestamp": timestamp}
+
+@app.get("/temperature5")
+async def read_temperature():
+    timestamp = datetime.now().isoformat()
+    temperature = randint(20,35)
+    print("Temperature; ", temperature, "Time: ", timestamp)
+    return {"temperature": temperature, "timestamp": timestamp}
