@@ -73,7 +73,6 @@
         try {
           const data = await getTemperatureData(props.endpoint);
           console.log('Fetched Data:', data);
-          //onst newLabels = [...chartData.value.labels, new Date(data.timestamp).toISOString()];
           const newLabels = [...chartData.value.labels, formatDate(data.timestamp)];
           const newData = [...chartData.value.datasets[0].data, data.temperature];
 
@@ -82,12 +81,11 @@
 
           chartData.value.datasets[0].label = 'Temperature';
           chartData.value.datasets[0].fill = false;
-          chartData.value.datasets[0].borderColor = 'rgb(254, 0, 125)';
+          chartData.value.datasets[0].borderColor = 'rgb(0, 209, 255)';
           chartData.value.datasets[0].tension = 0.1;
+          chartData.value.datasets[0].pointRadius = 2;  
+          chartData.value.datasets[0].pointBackgroundColor = 'blue';
 
-          // Set a larger point radius and a different color for the first data point
-          chartData.value.datasets[0].pointRadius = newLabels.map((_, index) => index === 0 ? 10 : 5);  // 10 for the first point, 5 for the rest
-          chartData.value.datasets[0].pointBackgroundColor = newLabels.map((_, index) => index === 0 ? 'red' : 'blue');  // red for the first point, blue for the rest
 
           console.log('Updated Chart Data:', chartData.value);
           updateXAxis();
