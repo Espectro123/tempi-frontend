@@ -1,4 +1,3 @@
-"""
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.endpoints.tempi_endpoints import router as temperature_router
@@ -16,4 +15,3 @@ app.add_middleware(
 
 # API routes
 app.include_router(temperature_router)
-"""

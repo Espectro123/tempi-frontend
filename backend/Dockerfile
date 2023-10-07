@@ -2,7 +2,7 @@
 FROM python:3.12-slim
 
 # Install FastAPI and Uvicorn
-RUN pip install fastapi uvicorn
+RUN pip install fastapi uvicorn pandas openpyxl
 
 # Set the working directory in the container
 WORKDIR /app
@@ -11,4 +11,4 @@ WORKDIR /app
 COPY ./ /app
 
 # Run app.py when the container launches
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
