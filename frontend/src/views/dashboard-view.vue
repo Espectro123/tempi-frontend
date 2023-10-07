@@ -5,9 +5,10 @@
         </header>
         <div class="main-content">
             <aside class="sidebar">
-              <button class="new-experiment-button">
+              <button class="new-experiment-button"  @click="showNewExperimentModal">
                 <i class="fas fa-plus"></i> New Experiment
               </button>
+              <new-experiment :show="showModal" @close="showModal = false"></new-experiment>
               <div class="experiment-summary-panel">
                   <h3>Summary</h3>
                   <!-- Panel content here -->
@@ -43,17 +44,27 @@
 
   <script>
   import TemperatureGraph from '../components/TemperatureGraph.vue';
-  import ExperimentModal from '../components/ExperimentModal.vue';
-
+  import NewExperiment from '../components/NewExperiment.vue';
+  
   export default {
     name: 'DashboardView',
     components: {
         TemperatureGraph,
-        ExperimentModal
+        NewExperiment 
+    },
+    data(){
+      return{
+        showModal: false,
+      };
     },
     setup() {
       const endpoints = ['temperature1', 'temperature2', 'temperature3', 'temperature4', 'temperature5'];
       return { endpoints };
+    },
+    methods: {
+        showNewExperimentModal() {
+            this.showModal = true;
+        }
     }
   };
   </script>

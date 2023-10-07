@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from random import randint
 from datetime import datetime
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -14,14 +15,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def read_root():
-    return {"message": "Hello from FastAPI"}
+class Experiment(BaseModel):
+    duration: str
+    temperature: str
 
-@app.get("/welcome")
-def welcome():
-    return {"message": "Welcome to Tempi idiot idiot"}
-
+@app.post("/experiments")
+async def create_experiment(experiment: Experiment):
+    return {"message": "Experiment created successfully", "data": experiment.dict()}
 
 @app.get("/temperature1")
 async def read_temperature():
