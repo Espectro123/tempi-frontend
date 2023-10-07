@@ -22,7 +22,8 @@
       LineChart
     },
     props: {
-      endpoint: String
+      endpoint: String,
+      label: String
     },
     setup(props) {
       const reRenderKey = ref(0);
@@ -30,7 +31,11 @@
       labels: [],
       datasets: [{ data: [] }]
       });
-      const options = {
+      const options = ref({
+        title: {
+          display: true,
+          text: props.label
+        },
         scales: {
           x: {
             type: 'time',
@@ -50,17 +55,18 @@
           },
           y: {
             min: -10,
-            max: 50
+            max: 50,
+            ticks: {
+              stepSize: 5  // This will cause the y-axis to increment by 5
+            }
           }
         }
-      };
+      });
 
       const updateXAxis = () => {
-        options.scales.x.min = new Date().getTime() - 30 * 60 * 1000;
-        options.scales.x.max = new Date().getTime() + 30 * 60 * 1000;
-        console.log('Updated Time Scale:', options.scales.x);
+        options.value.scales.x.min = new Date().getTime() - 30 * 60 * 1000;
+        options.value.scales.x.max = new Date().getTime() + 30 * 60 * 1000;
         reRenderKey.value++;
-        console.log('Updated reRenderKey:', reRenderKey.value);
       };
 
       const formatDate = (date) => {
@@ -72,16 +78,17 @@
       const fetchData = async () => {
         try {
           const data = await getTemperatureData(props.endpoint);
-          console.log('Fetched Data:', data);
           const newLabels = [...chartData.value.labels, formatDate(data.timestamp)];
           const newData = [...chartData.value.datasets[0].data, data.temperature];
+          options.value.title.text = props.label;
 
           chartData.value.labels = newLabels;
           chartData.value.datasets[0].data = newData;
 
           chartData.value.datasets[0].label = 'Temperature';
           chartData.value.datasets[0].fill = false;
-          chartData.value.datasets[0].borderColor = 'rgb(0, 209, 255)';
+          chartData.value.datasets[0].borderColor = 'rgb(0, 126, 254)';
+          chartData.value.datasets[0].backgroundColor = 'rgb(0, 126, 254)';
           chartData.value.datasets[0].tension = 0.1;
           chartData.value.datasets[0].pointRadius = 2;  
           chartData.value.datasets[0].pointBackgroundColor = 'blue';
