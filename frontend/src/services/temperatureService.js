@@ -6,6 +6,7 @@ export const getTemperatureData = async (endpoint) => {
   try {
     const response = await axios.get(`${BASE_URL}/${endpoint}`);
     console.log('API Response:', response.data);
+    console.log('Endpoint called: ', `${BASE_URL}/${endpoint}`)
     return response.data;
   } catch (error) {
     console.error('Error fetching temperature data:', error);

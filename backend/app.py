@@ -6,7 +6,7 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-# Add CORS middleware
+# Add CORS middleware. Allow all since it will run on localhost.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -19,41 +19,25 @@ class Experiment(BaseModel):
     duration: str
     temperature: str
 
+
+"""
+Get the experiment information that the user input on the frontend
+This method also start the heater to heat/cold the water
+Params:
+@experiment: Experiment model -> Object with the information of the experiment 
+"""
 @app.post("/experiments")
 async def create_experiment(experiment: Experiment):
     return {"message": "Experiment created successfully", "data": experiment.dict()}
 
-@app.get("/temperature1")
-async def read_temperature():
+"""
+This endpoint get the data from the sensor, store it and send it to the frontend.
+Params:
+@sensor_number: int -> Reprensent the number of the sensor from which the information will be collected
+"""
+@app.get("/temperature/{sensor_number}")
+async def read_sensor_data(sensor_number):
     timestamp = datetime.now().isoformat()
     temperature = randint(20,35)
-    print("Temperature; ", temperature, "Time: ", timestamp)
-    return {"temperature": temperature, "timestamp": timestamp}
-
-@app.get("/temperature2")
-async def read_temperature():
-    timestamp = datetime.now().isoformat()
-    temperature = randint(20,35)
-    print("Temperature; ", temperature, "Time: ", timestamp)
-    return {"temperature": temperature, "timestamp": timestamp}
-
-@app.get("/temperature3")
-async def read_temperature():
-    timestamp = datetime.now().isoformat()
-    temperature = randint(20,35)
-    print("Temperature; ", temperature, "Time: ", timestamp)
-    return {"temperature": temperature, "timestamp": timestamp}
-
-@app.get("/temperature4")
-async def read_temperature():
-    timestamp = datetime.now().isoformat()
-    temperature = randint(20,35)
-    print("Temperature; ", temperature, "Time: ", timestamp)
-    return {"temperature": temperature, "timestamp": timestamp}
-
-@app.get("/temperature5")
-async def read_temperature():
-    timestamp = datetime.now().isoformat()
-    temperature = randint(20,35)
-    print("Temperature; ", temperature, "Time: ", timestamp)
+    print("Temperature; ", temperature, "Time: ", timestamp, "Sensor number: ", sensor_number)
     return {"temperature": temperature, "timestamp": timestamp}

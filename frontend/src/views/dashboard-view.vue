@@ -8,7 +8,7 @@
               <button class="new-experiment-button"  @click="showNewExperimentModal">
                 <i class="fas fa-plus"></i> New Experiment
               </button>
-              <new-experiment :show="showModal" @close="showModal = false"></new-experiment>
+              <new-experiment :show="showModal" @close="showModal = false" @experiment-created="handleExperimentCreated"></new-experiment>
               <div class="experiment-summary-panel">
                   <h3>Summary</h3>
                   <!-- Panel content here -->
@@ -24,7 +24,7 @@
                 <i class="fas fa-download"></i> Download data
               </button>
             </aside>
-            <section class="graphs">
+            <section class="graphs" v-if="experimentCreated">
               <div class="row">
                 <div v-for="(endpoint, index) in endpoints.slice(0, 3)" :key="endpoint" class="temperature-graph-container">
                   <div class="graph-title">Pool {{ index + 1 }}</div>
@@ -37,6 +37,9 @@
                   <temperature-graph :endpoint="endpoint"></temperature-graph>
                 </div>
               </div>
+            </section>
+            <section v-else class="placeholder-section">
+              <p class="placeholder-text">Please create a new experiment to view graphs.</p>
             </section>
           </div>
     </div>
@@ -54,16 +57,20 @@
     },
     data(){
       return{
+        experimentCreated: false,
         showModal: false,
       };
     },
     setup() {
-      const endpoints = ['temperature1', 'temperature2', 'temperature3', 'temperature4', 'temperature5'];
+      const endpoints = ['temperature/1', 'temperature/2', 'temperature/3', 'temperature/4', 'temperature/5'];
       return { endpoints };
     },
     methods: {
         showNewExperimentModal() {
             this.showModal = true;
+        },
+        handleExperimentCreated() {
+          this.experimentCreated = true;
         }
     }
   };
@@ -144,7 +151,6 @@
   }
   
   .temperature-graph {
-      /* Adjust width as per your requirement */
       width: 30%;
       flex-shrink: 0;
       height: calc((100% - 10px) / 2); 
@@ -157,7 +163,7 @@
     margin-bottom: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #008CBA; /* Change color as needed */
+    background-color: #008CBA; 
     color: white;
     cursor: pointer;
     font-size: 15px;
@@ -187,6 +193,23 @@
   text-align: center;
   font-size: 1em; /* Adjusted font size */
   margin-bottom: 5px; /* Reduced margin */
+}
+
+.placeholder-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #e0f7fa;  /* Light blue background */
+  border-radius: 8px;  /* Optional: Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* Optional: subtle shadow for depth */
+  width: 100%;
+}
+
+.placeholder-text {
+  font-size: 1.25em;
+  color: #00796b;  /* Dark blue text */
+  text-align: center;
 }
   </style>
   

@@ -36,6 +36,7 @@ export default {
                 });
                 console.log('Response:', response.data);
                 this.$emit('close');  // Optionally close the modal upon successful submission
+                this.$emit('experiment-created');
             } catch (error) {
                 console.error('Error:', error.response ? error.response.data : error.message);
             }
