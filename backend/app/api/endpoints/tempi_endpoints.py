@@ -9,8 +9,10 @@ router = APIRouter()
 sensor = TemperatureSensor
 
 class Experiment(BaseModel):
-    duration: str
-    temperature: str
+    experiment_duration: str
+    interval: str
+    initial_temperature: str
+    target_temperature: str
 
 @router.get("/temperature/{sensor_id}")
 def get_temperature(sensor_id: int):
@@ -22,7 +24,7 @@ def get_temperature(sensor_id: int):
 def export_data():
     data = TemperatureService.get_temperature_readings()
     export_to_excel(data)
-    return {"msg": "Data exported"}
+    return "Data exported"
 
 """
 Get the experiment information that the user input on the frontend

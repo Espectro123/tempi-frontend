@@ -14,26 +14,30 @@
                   <!-- Panel content here -->
               </div>
               <div class="experiment-summary-panel">
-                <h5>Data points: 0</h5>
-                <h5>Started at: 12/11 12:00</h5>
-                <h5>End at: 13/11 14:50</h5>
-                <h5>Mean (Cº): 22.5</h5>
+                <h5>Initial temperature: 0ºC</h5>
+                <h5>Target temperature: 15ºC</h5>
+                <h5>Experiment duration: 10h</h5>
+                <h5>Temperature interval: 5h</h5>
                 <!-- Panel content here -->
               </div>
-              <button class="export-data-button">
+              <button class="export-data-button" @click="exportData">
                 <i class="fas fa-download"></i> Download data
               </button>
+              <div class="experiment-summary-panel">
+                <h5>No device detected to export the data</h5>
+                <!-- Panel content here -->
+              </div>
             </aside>
             <section class="graphs" v-if="experimentCreated">
               <div class="row">
                 <div v-for="(endpoint, index) in endpoints.slice(0, 3)" :key="endpoint" class="temperature-graph-container">
-                  <div class="graph-title">Pool {{ index + 1 }}</div>
+                  <div class="graph-title">Sensor {{ index + 1 }}</div>
                   <temperature-graph :endpoint="endpoint"></temperature-graph>
                 </div>
               </div>
               <div class="row">
                 <div v-for="(endpoint, index) in endpoints.slice(3)" :key="endpoint" class="temperature-graph-container">
-                  <div class="graph-title">Pool {{ index + 4 }}</div>
+                  <div class="graph-title">Sensor {{ index + 4 }}</div>
                   <temperature-graph :endpoint="endpoint"></temperature-graph>
                 </div>
               </div>
@@ -71,7 +75,19 @@
         },
         handleExperimentCreated() {
           this.experimentCreated = true;
-        }
+        },
+        async exportData() {
+            try {
+                const response = await fetch('http://localhost:8000/export');
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok ${response.statusText}`);
+                }
+                const data = await response.text();
+                alert(data);
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
+            }
+        },
     }
   };
   </script>

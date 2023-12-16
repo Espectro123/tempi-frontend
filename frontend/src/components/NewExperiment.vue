@@ -4,10 +4,14 @@
         <div class="modal-content">
             <span class="close" @click="closeModal">&times;</span>
             <form @submit.prevent="handleSubmit">
-                <label for="duration">Experiment Duration:</label>
-                <input type="text" id="duration" v-model="duration" required>
-                <label for="temperature">Temperature:</label>
-                <input type="text" id="temperature" v-model="temperature" required>
+                <label for="initial_temperature">Initial Temperature:</label>
+                <input type="text" id="initial_temperature" v-model="initial_temperature" required>
+                <label for="target_temperature">Target Temperature:</label>
+                <input type="text" id="target_temperature" v-model="target_temperature" required>
+                <label for="experiment_duration">Total experiment Duration:</label>
+                <input type="text" id="experiment_duration" v-model="experiment_duration" required>
+                <label for="interval">Change interval</label>
+                <input type="text" id="interval" v-model="interval" required>
                 <button type="submit">Start experiment</button>
             </form>
         </div>
@@ -31,8 +35,11 @@ export default {
         async handleSubmit() {
             try {
                 const response = await axios.post('http://localhost:8000/experiments', {
-                    duration: this.duration,
-                    temperature: this.temperature
+                    experiment_duration: this.experiment_duration,
+                    interval: this.interval,
+                    initial_temperature: this.initial_temperature,
+                    target_temperature: this.target_temperature
+
                 });
                 console.log('Response:', response.data);
                 this.$emit('close');  // Optionally close the modal upon successful submission
