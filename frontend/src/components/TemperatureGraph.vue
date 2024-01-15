@@ -54,8 +54,8 @@
             max: new Date().getTime() + 30 * 60 * 1000
           },
           y: {
-            min: -10,
-            max: 50,
+            min: 5,
+            max: 35,
             ticks: {
               stepSize: 5  // This will cause the y-axis to increment by 5
             }
@@ -71,7 +71,8 @@
 
       const formatDate = (date) => {
         const d = new Date(date);
-        const formattedDate = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}T${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:00.000Z`;
+        const formattedDate = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}T${String(d.getHours()-1).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:00.000Z`;
+        console.log('Time: ', formattedDate)
         return formattedDate;
       };
 

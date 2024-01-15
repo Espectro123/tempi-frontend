@@ -15,6 +15,5 @@ def read_temperature(sensor_id):
     return temperature_in_celsius
 
 
-
-
-
+for i in range(1,6):
+	print("Sensor " + str(i) + " is " + str(read_temperature(i)))

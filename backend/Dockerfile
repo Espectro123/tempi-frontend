@@ -4,6 +4,9 @@ FROM python:3.12-slim
 # Install FastAPI and Uvicorn
 RUN pip install fastapi uvicorn pandas openpyxl
 
+RUN pip install w1thermsensor
+
+RUN pip install RPi.GPIO
 # Set the working directory in the container
 WORKDIR /app
 
