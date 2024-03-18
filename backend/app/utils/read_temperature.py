@@ -17,4 +17,3 @@ def read_temperature(sensor_id):
 
 
 
-

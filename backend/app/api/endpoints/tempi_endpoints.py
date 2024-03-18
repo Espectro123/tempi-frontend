@@ -9,7 +9,7 @@ from app.utils.move_to_usb import move_to_usb
 from pydantic import BaseModel
 from app.utils.set_start_state_tk2000 import start_tk2000, set_started_temperature
 import time
-
+from random import randint
 
 router = APIRouter()
 
@@ -32,6 +32,7 @@ def get_temperature(sensor_id: int):
         InMemoryExperiment.control_intervals()
 
     return readings[-1]
+
 
 @router.get("/export/")
 def export_data():
@@ -63,5 +64,4 @@ async def create_experiment(experiment: Experiment):
     print("Setting up the experiment in memory")
     InMemoryExperiment.set_up_experiment(int(experiment.experiment_duration),float(experiment.initial_temperature),float(experiment.target_temperature),int(experiment.interval))
     time.sleep(5) # Time to start things
-    
     return {"message": "Experiment created successfully", "data": experiment.dict()}
