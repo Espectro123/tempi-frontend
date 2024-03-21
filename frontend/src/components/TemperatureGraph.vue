@@ -9,13 +9,15 @@
   import "chartjs-adapter-date-fns";
 
   import { Chart, registerables } from 'chart.js';
+  import 'chartjs-plugin-zoom';
   Chart.register(...registerables);
 
 
   import { LineChart } from 'vue-chart-3';
   import { getTemperatureData } from '../services/temperatureService.js';
 
-
+  import { format } from 'date-fns';
+  
   export default {
     name: 'TemperatureGraph',
     components: {
@@ -35,6 +37,23 @@
         title: {
           display: true,
           text: props.label
+        },
+        plugins: {
+          zoom: {
+            pan: {
+              enabled: true,
+              mode: 'x',
+            },
+            zoom: {
+              wheel: {
+                enabled: true,
+              },
+              pinch: {
+                enabled: true,
+              },
+              mode: 'x',
+            },
+          },
         },
         scales: {
           x: {
@@ -69,10 +88,12 @@
         reRenderKey.value++;
       };
 
-      const formatDate = (date) => {
-        const d = new Date(date);
-        const formattedDate = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}T${String(d.getHours()-1).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:00.000Z`;
-        console.log('Time: ', formattedDate)
+      const formatDate = () => {
+        
+        const currentDate = new Date();
+        const formattedDate = format(currentDate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        console.log(formattedDate);
+
         return formattedDate;
       };
 

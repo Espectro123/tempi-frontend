@@ -14,19 +14,18 @@
                   <!-- Panel content here -->
               </div>
               <div class="experiment-summary-panel">
-                <h5>Initial temperature: 0ºC</h5>
-                <h5>Target temperature: 15ºC</h5>
-                <h5>Experiment duration: 10h</h5>
-                <h5>Temperature interval: 5h</h5>
-                <!-- Panel content here -->
-              </div>
+                <h3>Summary</h3>
+                <h5>Initial temperature: {{ experimentData.initial_temperature }}ºC</h5>
+                <h5>Target temperature: {{ experimentData.target_temperature }}ºC</h5>
+                <h5>Experiment duration: {{ experimentData.experiment_duration }}</h5>
+                <h5>Temperature interval: {{ experimentData.interval }}</h5>
+              </div>              
               <button class="export-data-button" @click="exportData">
                 <i class="fas fa-download"></i> Download data
               </button>
-              <div class="experiment-summary-panel">
-                <h5>No device detected to export the data</h5>
-                <!-- Panel content here -->
-              </div>
+              <button class="exit-fullscreen-button" @click="exitFullscreen">
+                <i class="fas fa-compress"></i> Exit Fullscreen
+              </button>              
             </aside>
             <section class="graphs" v-if="experimentCreated">
               <div class="row">
@@ -63,6 +62,7 @@
       return{
         experimentCreated: false,
         showModal: false,
+        experimentData: {},
       };
     },
     setup() {
@@ -73,8 +73,17 @@
         showNewExperimentModal() {
             this.showModal = true;
         },
-        handleExperimentCreated() {
+        handleExperimentCreated(experimentData) {
           this.experimentCreated = true;
+          this.experimentData = experimentData;
+        },
+        exitFullscreen() {
+          if (document.exitFullscreen) {
+              document.exitFullscreen().catch(err => {
+                // Handle or log the error more gracefully here
+                console.log("Error exiting fullscreen: ", err.message);
+              });
+          }
         },
         async exportData() {
             try {
@@ -172,7 +181,7 @@
       height: calc((100% - 10px) / 2); 
   }
 
-  .new-experiment-button, .export-data-button {
+  .new-experiment-button, .export-data-button, .exit-fullscreen-button{
     display: block;
     width: 100%;
     padding: 10px;

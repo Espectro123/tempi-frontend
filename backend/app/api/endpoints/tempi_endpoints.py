@@ -2,11 +2,15 @@ from fastapi import APIRouter
 from app.domain.entities.temperature_sensor import TemperatureSensor
 from app.services.temperature_service import TemperatureService
 from app.utils.export_to_excel import export_to_excel
+#
 from app.utils.control_tk2000 import set_temperature
+#
 from app.utils.read_temperature import read_temperature
+#
 from app.repositories.in_memory_experiment import InMemoryExperiment
 from app.utils.move_to_usb import move_to_usb
 from pydantic import BaseModel
+#
 from app.utils.set_start_state_tk2000 import start_tk2000, set_started_temperature
 import time
 from random import randint
@@ -23,6 +27,7 @@ class Experiment(BaseModel):
 
 @router.get("/temperature/{sensor_id}")
 def get_temperature(sensor_id: int):
+
     readings = []
     if InMemoryExperiment.experiment_finish == False:
         TemperatureService.add_temperature_reading(sensor, sensor_id)
@@ -32,6 +37,9 @@ def get_temperature(sensor_id: int):
         InMemoryExperiment.control_intervals()
 
     return readings[-1]
+
+#TemperatureService.add_temperature_reading(sensor, sensor_id)
+#return randint(15,30)
 
 
 @router.get("/export/")
@@ -50,6 +58,7 @@ Params:
 """
 @router.post("/experiments")
 async def create_experiment(experiment: Experiment):
+    
     print("Starting TK 2000")
     start_tk2000()
     time.sleep(3)

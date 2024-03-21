@@ -43,7 +43,13 @@ export default {
                 });
                 console.log('Response:', response.data);
                 this.$emit('close');  // Optionally close the modal upon successful submission
-                this.$emit('experiment-created');
+                this.$emit('experiment-created', {
+                initial_temperature: this.initial_temperature,
+                target_temperature: this.target_temperature,
+                experiment_duration: this.experiment_duration,
+                interval: this.interval,
+                });
+                
             } catch (error) {
                 console.error('Error:', error.response ? error.response.data : error.message);
             }

@@ -4,6 +4,11 @@ from app.api.endpoints.tempi_endpoints import router as temperature_router
 
 app = FastAPI()
 
+origins = [
+    "http://localhost:8080",
+    "http://localhost:8000",
+]
+
 # CORS setup
 app.add_middleware(
     CORSMiddleware,
