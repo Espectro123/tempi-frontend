@@ -1,27 +1,47 @@
-// NewExperiment.vue
 <template>
     <div v-if="show" class="new-experiment-modal">
         <div class="modal-content">
             <span class="close" @click="closeModal">&times;</span>
             <form @submit.prevent="handleSubmit">
-                <label for="initial_temperature">Initial Temperature:</label>
+                <label for="initial_temperature">Initial temperature
+                    <i class="fas fa-question-circle" title="Starting temperature of a cycle. Range [10.0, 30.0]"></i>
+                </label>
                 <input type="text" id="initial_temperature" v-model="initial_temperature" required>
-                <label for="target_temperature">Target Temperature:</label>
+                
+                <label for="target_temperature">Target temperature
+                    <i class="fas fa-question-circle" title="Maximun or minimum temperature of a cycle. Range [10.0, 30.0]"></i>
+                </label>
                 <input type="text" id="target_temperature" v-model="target_temperature" required>
-                <label for="experiment_duration">Total experiment Duration:</label>
+                
+                <label for="experiment_duration">Experiment duration
+                    <i class="fas fa-question-circle" title="Duration of the experiment. Minimum value: 1.0"></i>
+                </label>
                 <input type="text" id="experiment_duration" v-model="experiment_duration" required>
-                <label for="interval">Change interval</label>
+                
+                <label for="interval">Cycle duration
+                    <i class="fas fa-question-circle" title="Indicates the duration of a cycle. Minimum value: 0.1. Must be lower than Experiment duration."></i>
+                </label>
                 <input type="text" id="interval" v-model="interval" required>
-                <button type="submit">Start experiment</button>
+                
+                <button type="submit" :disabled="isLoading">
+                    <span v-if="isLoading">Creating experiment... <i class="fas fa-spinner fa-spin"></i></span>
+                    <span v-else>Start experiment</span>
+                </button>
             </form>
         </div>
     </div>
 </template>
 
+
 <script>
 import axios from 'axios';
 
 export default {
+    data() {
+        return {
+            isLoading: false
+        };
+    },
     props: {
         show: {
             type: Boolean,
@@ -33,25 +53,26 @@ export default {
             this.$emit('close');
         },
         async handleSubmit() {
+            this.isLoading = true; // Step 2: Set isLoading to true when submission starts
             try {
                 const response = await axios.post('http://localhost:8000/experiments', {
                     experiment_duration: this.experiment_duration,
                     interval: this.interval,
                     initial_temperature: this.initial_temperature,
                     target_temperature: this.target_temperature
-
                 });
                 console.log('Response:', response.data);
-                this.$emit('close');  // Optionally close the modal upon successful submission
                 this.$emit('experiment-created', {
-                initial_temperature: this.initial_temperature,
-                target_temperature: this.target_temperature,
-                experiment_duration: this.experiment_duration,
-                interval: this.interval,
+                    initial_temperature: this.initial_temperature,
+                    target_temperature: this.target_temperature,
+                    experiment_duration: this.experiment_duration,
+                    interval: this.interval,
                 });
-                
             } catch (error) {
                 console.error('Error:', error.response ? error.response.data : error.message);
+            } finally {
+                this.isLoading = false; // Reset loading state
+                this.$emit('close'); // Close modal
             }
         }
     }

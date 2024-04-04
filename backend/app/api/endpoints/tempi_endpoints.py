@@ -27,7 +27,6 @@ class Experiment(BaseModel):
 
 @router.get("/temperature/{sensor_id}")
 def get_temperature(sensor_id: int):
-
     readings = []
     if InMemoryExperiment.experiment_finish == False:
         TemperatureService.add_temperature_reading(sensor, sensor_id)
@@ -37,9 +36,10 @@ def get_temperature(sensor_id: int):
         InMemoryExperiment.control_intervals()
 
     return readings[-1]
+    #TemperatureService.add_temperature_reading(sensor, sensor_id)
+    #return randint(15,30)
+    
 
-#TemperatureService.add_temperature_reading(sensor, sensor_id)
-#return randint(15,30)
 
 
 @router.get("/export/")
@@ -58,7 +58,6 @@ Params:
 """
 @router.post("/experiments")
 async def create_experiment(experiment: Experiment):
-    
     print("Starting TK 2000")
     start_tk2000()
     time.sleep(3)
