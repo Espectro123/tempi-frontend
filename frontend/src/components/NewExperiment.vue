@@ -4,24 +4,24 @@
             <span class="close" @click="closeModal">&times;</span>
             <form @submit.prevent="handleSubmit">
                 <label for="initial_temperature">Initial temperature
-                    <i class="fas fa-question-circle" title="Starting temperature of a cycle. Range [10.0, 30.0]"></i>
+                    <i class="fas fa-question-circle" title="Starting temperature of a cycle. Range [10.0, 30.0]ºC"></i>
                 </label>
-                <input type="text" id="initial_temperature" v-model="initial_temperature" required>
+                <input type="text" id="initial_temperature" placeholder="Intial Temperature on celsius [10.0, 30.0]" v-model="initial_temperature" required>
                 
                 <label for="target_temperature">Target temperature
-                    <i class="fas fa-question-circle" title="Maximun or minimum temperature of a cycle. Range [10.0, 30.0]"></i>
+                    <i class="fas fa-question-circle" title="Maximun or minimum temperature of a cycle. Range [10.0, 30.0]ºC"></i>
                 </label>
-                <input type="text" id="target_temperature" v-model="target_temperature" required>
+                <input type="text" id="target_temperature" placeholder="Target Temperature on celsius [10.0, 30.0]" v-model="target_temperature" required>
                 
                 <label for="experiment_duration">Experiment duration
-                    <i class="fas fa-question-circle" title="Duration of the experiment. Minimum value: 1.0"></i>
+                    <i class="fas fa-question-circle" title="Duration of the experiment in hours. Minimum value: 1.0"></i>
                 </label>
-                <input type="text" id="experiment_duration" v-model="experiment_duration" required>
+                <input type="text" id="experiment_duration" placeholder="Duration of the experiment in hours... 1.0" v-model="experiment_duration" required>
                 
                 <label for="interval">Cycle duration
-                    <i class="fas fa-question-circle" title="Indicates the duration of a cycle. Minimum value: 0.1. Must be lower than Experiment duration."></i>
+                    <i class="fas fa-question-circle" title="Indicates the duration of a cycle in hours. Minimum value: 0.1. Must be lower than Experiment duration."></i>
                 </label>
-                <input type="text" id="interval" v-model="interval" required>
+                <input type="text" id="interval" placeholder="Duration of each cycle in hours... 1.0" v-model="interval" required>
                 
                 <button type="submit" :disabled="isLoading">
                     <span v-if="isLoading">Creating experiment... <i class="fas fa-spinner fa-spin"></i></span>

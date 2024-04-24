@@ -19,12 +19,18 @@ router = APIRouter()
 
 sensor = TemperatureSensor
 
+"""
+Represent an experiment. Only used during creation.
+"""
 class Experiment(BaseModel):
     experiment_duration: str
     interval: str
     initial_temperature: str
     target_temperature: str
 
+"""
+Get and store the temperature from each sensor
+"""
 @router.get("/temperature/{sensor_id}")
 def get_temperature(sensor_id: int):
     readings = []
@@ -39,9 +45,10 @@ def get_temperature(sensor_id: int):
     #TemperatureService.add_temperature_reading(sensor, sensor_id)
     #return randint(15,30)
     
-
-
-
+"""
+Export the data from the RAM memory to  a excel file.
+The data is store on the RAM memory to avoid SD corruption (Destroyed the last machine)
+"""
 @router.get("/export/")
 def export_data():
     data = TemperatureService.get_temperature_readings()
@@ -71,5 +78,5 @@ async def create_experiment(experiment: Experiment):
     
     print("Setting up the experiment in memory")
     InMemoryExperiment.set_up_experiment(int(experiment.experiment_duration),float(experiment.initial_temperature),float(experiment.target_temperature),int(experiment.interval))
-    time.sleep(5) # Time to start things
+    time.sleep(5) # Time to start the hardware
     return {"message": "Experiment created successfully", "data": experiment.dict()}

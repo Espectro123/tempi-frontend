@@ -3,7 +3,7 @@ from app.domain.entities.temperature_sensor import TemperatureSensor
 
 class InMemoryRepository:
 
-    # Class variable
+    # Class variable. Store timestamp and sensor data on RAM memory
     data = []
 
     @classmethod

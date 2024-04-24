@@ -22,10 +22,7 @@
               </div>              
               <button class="export-data-button" @click="exportData">
                 <i class="fas fa-download"></i> Download data
-              </button>
-              <button class="exit-fullscreen-button" @click="exitFullscreen">
-                <i class="fas fa-compress"></i> Exit Fullscreen
-              </button>              
+              </button>   
             </aside>
             <section class="graphs" v-if="experimentCreated">
               <div class="row">
@@ -42,7 +39,7 @@
               </div>
             </section>
             <section v-else class="placeholder-section">
-              <p class="placeholder-text">Please create a new experiment to view graphs.</p>
+              <p class="placeholder-text">Please create a new experiment</p>
             </section>
           </div>
     </div>
@@ -76,14 +73,6 @@
         handleExperimentCreated(experimentData) {
           this.experimentCreated = true;
           this.experimentData = experimentData;
-        },
-        exitFullscreen() {
-          if (document.exitFullscreen) {
-              document.exitFullscreen().catch(err => {
-                // Handle or log the error more gracefully here
-                console.log("Error exiting fullscreen: ", err.message);
-              });
-          }
         },
         async exportData() {
             try {

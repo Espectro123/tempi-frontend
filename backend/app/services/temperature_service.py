@@ -5,6 +5,9 @@ from datetime import datetime
 from random import randint
 import sys
 
+"""
+Service under ODM. In charge to manage how we add and get data.
+"""
 class TemperatureService:
 
     @staticmethod
