@@ -1,5 +1,6 @@
 from w1thermsensor import W1ThermSensor, Sensor
 from random import randint
+import time
 
 SENSOR_DICT = {
     1 : "000000024604",
@@ -17,4 +18,10 @@ def read_temperature(sensor_id):
 
 
 
-
+while(True):
+    print("Sensor 1 Temp: ", read_temperature(1))
+    print("Sensor 2 Temp: ", read_temperature(2))
+    print("Sensor 3 Temp: ", read_temperature(3))
+    print("Sensor 4 Temp: ", read_temperature(4))
+    print("Sensor 5 Temp: ", read_temperature(5))
+    time.sleep(5)

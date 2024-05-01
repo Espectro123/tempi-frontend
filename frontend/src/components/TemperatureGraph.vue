@@ -50,8 +50,8 @@ export default {
               minute: 'HH:mm'
             }
           },
-          min: new Date().getTime() - 30 * 60 * 1000,
-          max: new Date().getTime() + 30 * 60 * 1000
+          min: new Date().getTime() - 240 * 60 * 1000,
+          max: new Date().getTime() + 240 * 60 * 1000
         },
         y: {
           min: 5,
@@ -64,8 +64,8 @@ export default {
     });
 
     const updateXAxis = () => {
-      options.value.scales.x.min = new Date().getTime() - 30 * 60 * 1000;
-      options.value.scales.x.max = new Date().getTime() + 30 * 60 * 1000;
+      options.value.scales.x.min = new Date().getTime() - 90 * 60 * 1000;
+      options.value.scales.x.max = new Date().getTime() + 90 * 60 * 1000;
       reRenderKey.value++;
     };
 
