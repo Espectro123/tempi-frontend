@@ -14,10 +14,13 @@ from pydantic import BaseModel
 from app.utils.set_start_state_tk2000 import start_tk2000, set_started_temperature
 import time
 from random import randint
+import datetime
+import pytz
 
 router = APIRouter()
 
 sensor = TemperatureSensor
+
 
 """
 Represent an experiment. Only used during creation.
@@ -44,7 +47,14 @@ def get_temperature(sensor_id: int):
     return readings[-1]
     #TemperatureService.add_temperature_reading(sensor, sensor_id)
     #return randint(15,30)
-    
+
+"""
+Get the timestamp
+"""
+@router.get("/time")
+def get_time():
+    return str(datetime.datetime.now(pytz.timezone('Europe/Madrid')).isoformat())
+
 """
 Export the data from the RAM memory to  a excel file.
 The data is store on the RAM memory to avoid SD corruption (Destroyed the last machine)

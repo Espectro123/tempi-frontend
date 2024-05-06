@@ -64,23 +64,16 @@ export default {
     });
 
     const updateXAxis = () => {
-      options.value.scales.x.min = new Date().getTime() - 90 * 60 * 1000;
-      options.value.scales.x.max = new Date().getTime() + 90 * 60 * 1000;
+      options.value.scales.x.min = new Date().getTime() - 30 * 60 * 1000;
+      options.value.scales.x.max = new Date().getTime() + 30 * 60 * 1000;
       reRenderKey.value++;
-    };
-
-    const formatDate = (date) => {
-      const d = new Date(date);
-      const formattedDate = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}T${String(d.getHours()-1).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:00.000Z`;
-      console.log('Time: ', formattedDate)
-      return formattedDate;
     };
 
     const fetchData = async () => {
       try {
-        const data = await getTemperatureData(props.endpoint);
-        const newLabels = [...chartData.value.labels, formatDate(new Date().getTime())];
-        const newData = [...chartData.value.datasets[0].data, data];
+        const [temperatureData, timestamp] = await getTemperatureData(props.endpoint);
+        const newLabels = [...chartData.value.labels, timestamp];
+        const newData = [...chartData.value.datasets[0].data, temperatureData];
         options.value.title.text = props.label;
 
         chartData.value.labels = newLabels;
