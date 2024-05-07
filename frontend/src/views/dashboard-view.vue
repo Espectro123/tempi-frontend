@@ -57,7 +57,7 @@
     },
     data(){
       return{
-        experimentCreated: false,
+        experimentCreated: true,
         showModal: false,
         experimentData: {},
       };
