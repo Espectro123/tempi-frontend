@@ -2,12 +2,12 @@ from fastapi import APIRouter
 from app.domain.entities.temperature_sensor import TemperatureSensor
 from app.services.temperature_service import TemperatureService
 from app.utils.export_to_excel import export_to_excel
-#from app.utils.control_tk2000 import set_temperature
-#from app.utils.read_temperature import read_temperature
-#from app.repositories.in_memory_experiment import InMemoryExperiment
+from app.utils.control_tk2000 import set_temperature
+from app.utils.read_temperature import read_temperature
+from app.repositories.in_memory_experiment import InMemoryExperiment
 from app.utils.move_to_usb import move_to_usb
 from pydantic import BaseModel
-#from app.utils.set_start_state_tk2000 import start_tk2000, set_started_temperature
+from app.utils.set_start_state_tk2000 import start_tk2000, set_started_temperature
 import time
 from random import randint
 import datetime
@@ -32,7 +32,6 @@ Get and store the temperature from each sensor
 """
 @router.get("/temperature/{sensor_id}")
 def get_temperature(sensor_id: int):
-    """
     readings = []
     if InMemoryExperiment.experiment_finish == False:
         TemperatureService.add_temperature_reading(sensor, sensor_id)
@@ -42,9 +41,8 @@ def get_temperature(sensor_id: int):
         InMemoryExperiment.control_intervals()
 
     return readings[-1]
-    """
-    TemperatureService.add_temperature_reading(sensor, sensor_id)
-    return randint(15,30)
+    #TemperatureService.add_temperature_reading(sensor, sensor_id)
+    #return randint(15,30)
 
 """
 Get the timestamp
@@ -61,8 +59,8 @@ The data is store on the RAM memory to avoid SD corruption (Destroyed the last m
 def export_data():
     data = TemperatureService.get_temperature_readings()
     export_to_excel(data)
-    #time.sleep(3)
-    #move_to_usb()
+    time.sleep(3)
+    move_to_usb()
     return "Data exported"
 
 """
@@ -73,7 +71,6 @@ Params:
 """
 @router.post("/experiments")
 async def create_experiment(experiment: Experiment):
-    """
     print("Starting TK 2000")
     start_tk2000()
     time.sleep(3)
@@ -88,5 +85,4 @@ async def create_experiment(experiment: Experiment):
     print("Setting up the experiment in memory")
     InMemoryExperiment.set_up_experiment(int(experiment.experiment_duration),float(experiment.initial_temperature),float(experiment.target_temperature),int(experiment.interval))
     time.sleep(5) # Time to start the hardware
-    """
     return {"message": "Experiment created successfully", "data": experiment.dict()}
