@@ -3,11 +3,11 @@ from datetime import datetime
 
 # Sample data array of dictionaries, adjusted to have same timestamps for a group of five readings
 data = [
-    {'Temperature': 22, 'timestamp': '2024-04-24T22:37:16.440734'},
-    {'Temperature': 23, 'timestamp': '2024-04-24T22:37:16.440734'},
-    {'Temperature': 24, 'timestamp': '2024-04-24T22:37:16.440734'},
-    {'Temperature': 25, 'timestamp': '2024-04-24T22:37:16.440734'},
-    {'Temperature': 26, 'timestamp': '2024-04-24T22:37:16.440734'},
+    {'Temperature': 22, 'timestamp': '2024-05-12T17:36:24.682765'},
+    {'Temperature': 23, 'timestamp': '2024-05-12T17:36:24.682765'},
+    {'Temperature': 24, 'timestamp': '2024-05-12T17:36:24.682765'},
+    {'Temperature': 25, 'timestamp': '2024-05-12T17:36:24.682765'},
+    {'Temperature': 26, 'timestamp': '2024-05-12T17:36:24.682765'},
     {'Temperature': 27, 'timestamp': '2024-04-24T22:37:26.440734'},
     {'Temperature': 28, 'timestamp': '2024-04-24T22:37:26.440734'},
     {'Temperature': 29, 'timestamp': '2024-04-24T22:37:26.440734'},

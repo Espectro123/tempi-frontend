@@ -61,8 +61,8 @@ The data is store on the RAM memory to avoid SD corruption (Destroyed the last m
 def export_data():
     data = TemperatureService.get_temperature_readings()
     export_to_excel(data)
-    time.sleep(3)
-    move_to_usb()
+    #time.sleep(3)
+    #move_to_usb()
     return "Data exported"
 
 """

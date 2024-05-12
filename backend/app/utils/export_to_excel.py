@@ -1,6 +1,8 @@
 import pandas as pd
 
 def export_to_excel(data):
+    print("THE DATA IS: ")
+    print(data)
     # Convert to DataFrame
     df = pd.DataFrame(data)
 
@@ -15,7 +17,7 @@ def export_to_excel(data):
     df['Sensor'] = 'Sensor ' + (df.groupby('timestamp').cumcount() + 1).astype(str)
 
     # Pivot table to widen the DataFrame
-    pivot_df = df.pivot(index=['Date', 'Time'], columns='Sensor', values='Temperature').reset_index()
+    pivot_df = df.pivot(index=['Date', 'Time'], columns='Sensor', values='temperature').reset_index()
 
     # Save the pivoted DataFrame to an Excel file using the 'openpyxl' engine
     pivot_df.to_excel('tempi_experiment.xlsx', index=False, engine='openpyxl')

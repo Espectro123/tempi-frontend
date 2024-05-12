@@ -11,10 +11,21 @@ Service under ODM. In charge to manage how we add and get data.
 """
 class TemperatureService:
 
-    @staticmethod
-    def add_temperature_reading(sensor: TemperatureSensor, sensor_id):
-        sensor.timestamp = datetime.datetime.now(pytz.timezone('Europe/Madrid')).isoformat()
-        sensor.temperature = read_temperature(sensor_id)
+    contador = 0
+    time = ""
+
+    @classmethod
+    def add_temperature_reading(cls, sensor: TemperatureSensor, sensor_id):
+
+        if (cls.contador != 0):
+            sensor.timestamp = cls.time
+            cls.contador = cls.contador -1
+        else:
+            cls.time = datetime.datetime.now(pytz.timezone('Europe/Madrid')).strftime('%Y-%m-%dT%H:%M:%S.%f')
+            sensor.timestamp = cls.time
+            cls.contador = 4
+
+        sensor.temperature = randint(15,30) #read_temperature(sensor_id)
         InMemoryRepository.add_reading(sensor)
 
     @staticmethod
