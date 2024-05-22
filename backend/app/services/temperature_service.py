@@ -25,7 +25,7 @@ class TemperatureService:
             sensor.timestamp = cls.time
             cls.contador = 4
 
-        sensor.temperature = randint(15,30) #read_temperature(sensor_id)
+        sensor.temperature = read_temperature(sensor_id)
         InMemoryRepository.add_reading(sensor)
 
     @staticmethod
