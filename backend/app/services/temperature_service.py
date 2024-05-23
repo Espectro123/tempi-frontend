@@ -38,8 +38,8 @@ class TemperatureService:
     def read_temperature_and_get_mean(sensor_id):
 
         readings_list = []
-        number_of_measurements = 5
-        max_tries = 20
+        number_of_measurements = 10
+        max_tries = 50
         tries = 0
         mean_temperature = 0
       
@@ -52,8 +52,8 @@ class TemperatureService:
                 number_of_measurements = number_of_measurements - 1
 
             tries = tries + 1
-            
-            time.sleep(0.1)
+
+            time.sleep(0.02)
 
         if number_of_measurements == 0:
             mean_temperature = sum(readings_list)/len(readings_list)
