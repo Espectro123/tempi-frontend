@@ -50,8 +50,8 @@ export default {
               minute: 'HH:mm'
             }
           },
-          min: new Date().getTime() - 240 * 60 * 1000,
-          max: new Date().getTime() + 240 * 60 * 1000
+          min: new Date().getTime() - 30 * 60 * 1000,
+          max: new Date().getTime() + 30 * 60 * 1000
         },
         y: {
           min: 5,
