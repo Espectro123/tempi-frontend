@@ -5,6 +5,7 @@ from random import randint
 import datetime
 import pytz
 import sys
+import time
 
 """
 Service under ODM. In charge to manage how we add and get data.
@@ -31,3 +32,31 @@ class TemperatureService:
     @staticmethod
     def get_temperature_readings():
         return InMemoryRepository.get_readings()
+
+
+    @staticmethod
+    def read_temperature_and_get_mean(sensor_id):
+
+        readings_list = []
+        number_of_measurements = 5
+        max_tries = 20
+        tries = 0
+        mean_temperature = 0
+      
+        while number_of_measurements != 0 and tries <= max_tries:
+
+            reading = read_temperature(sensor_id)
+
+            if (reading != 0):
+                readings_list.append(int(reading))
+                number_of_measurements = number_of_measurements - 1
+
+            tries = tries + 1
+            
+            time.sleep(0.1)
+
+        if number_of_measurements == 0:
+            mean_temperature = sum(readings_list)/len(readings_list)
+            return mean_temperature
+        else:
+            return mean_temperature

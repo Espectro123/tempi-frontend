@@ -83,8 +83,8 @@ export default {
         chartData.value.datasets[0].fill = false;
         chartData.value.datasets[0].borderColor = 'rgb(0, 126, 254)';
         chartData.value.datasets[0].backgroundColor = 'rgb(0, 126, 254)';
-        chartData.value.datasets[0].tension = 0.1;
-        chartData.value.datasets[0].pointRadius = 2;  
+        chartData.value.datasets[0].tension = 0.2;
+        chartData.value.datasets[0].pointRadius = 4;  
         chartData.value.datasets[0].pointBackgroundColor = 'blue';
 
 

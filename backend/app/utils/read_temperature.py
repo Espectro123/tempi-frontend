@@ -11,7 +11,12 @@ SENSOR_DICT = {
 
 # Read temperature from any sensor
 def read_temperature(sensor_id):
-    sensor = W1ThermSensor(sensor_type=Sensor.DS18B20, sensor_id=SENSOR_DICT[sensor_id])
-    temperature_in_celsius = sensor.get_temperature()
-    return temperature_in_celsius
+    temperature_in_celsius = 0
+    try:
+        sensor = W1ThermSensor(sensor_type=Sensor.DS18B20, sensor_id=SENSOR_DICT[sensor_id])
+        temperature_in_celsius = sensor.get_temperature()
+        return temperature_in_celsius
+    except:
+        return temperature_in_celsius
+    
 
